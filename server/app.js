@@ -1,8 +1,23 @@
+require('dotenv').config()
+
 const express = require("express");
 const morgan = require("morgan");
+const mongoose = require("mongoose");
 const cookieParser = require("cookie-parser");
 const PORT = 5005;
 
+// const MONGO_URI =
+  // process.env.MONGODB_URI || "mongodb://127.0.0.1:27017/cohorts";
+
+mongoose
+  .connect(process.env.MONGODB_URI)
+  .then((x) => {
+    const dbName = x.connections[0].name;
+    console.log(`Connected to Mongo! Database name: "${dbName}"`);
+  })
+  .catch((err) => {
+    console.error("Error connecting to mongo: ", err);
+  });
 // STATIC DATA
 // Devs Team - Import the provided files with JSON data of students and cohorts here:
 // ...
@@ -21,6 +36,11 @@ app.use(express.static("public"));
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
+const studentsRoutes = require("./routes/student.routes");
+app.use("/", studentsRoutes);
+
+const cohortsRoutes = require("./routes/cohort.routes");
+app.use("/", cohortsRoutes);
 
 // ROUTES - https://expressjs.com/en/starter/basic-routing.html
 // Devs Team - Start working on the routes here:
