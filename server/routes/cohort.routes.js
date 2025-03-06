@@ -47,4 +47,12 @@ router.get("/cohorts", (req, res, next) => {
     })
   });
 
+  router.put("/cohorts/:id", (req, res, next)=>{
+    Cohort.findByIdAndUpdate(req.params.id, req.body).then((updatedCohort) => 
+        res.json(updatedCohort)).catch((err) => {
+      console.log("Error while updating the cohort", err);
+      res.status(500).json({ message: "Error while updating the cohort" });
+    });
+})
+
 module.exports = router;

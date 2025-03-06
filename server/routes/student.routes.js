@@ -43,8 +43,16 @@ router.post('/students', (req, res, next) => {
     .then((response) => res.json(response))
     .catch((err) => {
       console.log("Error while creating the project", err);
-      res.status(500).json({ message: "Error while creating the project" });
+      res.status(500).json({ message: "Error while creating the student doc" });
     });
 });
+
+router.put("/students/:id", (req, res, next)=>{
+    Student.findByIdAndUpdate(req.params.id, req.body).then((updatedStudent) => 
+        res.json(updatedStudent)).catch((err) => {
+      console.log("Error while updating the student", err);
+      res.status(500).json({ message: "Error while updating the student" });
+    });
+})
 
 module.exports = router;
