@@ -55,4 +55,13 @@ router.get("/cohorts", (req, res, next) => {
     });
 })
 
+router.delete("/cohorts/:id", (req, res, next)=>{ 
+    Cohort.findByIdAndDelete(req.params.id).then(() => 
+        res.json({ message: "Cohort deleted"})).catch((err) => {
+      console.log("Error while deleting the cohort", err);
+      res.status(500).json({ message: "Error while deleting the cohort" });
+    });
+}
+)
+
 module.exports = router;

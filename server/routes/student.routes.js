@@ -55,4 +55,12 @@ router.put("/students/:id", (req, res, next)=>{
     });
 })
 
+router.delete("/students/:id", (req, res, next)=>{
+    Student.findByIdAndDelete(req.params.id).then(() => 
+        res.json({ message: "Student deleted"})).catch((err) => {
+      console.log("Error while deleting the student", err);
+      res.status(500).json({ message: "Error while deleting the student" });
+    });
+})
+
 module.exports = router;
