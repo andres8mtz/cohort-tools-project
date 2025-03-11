@@ -4,6 +4,7 @@ const express = require("express");
 const morgan = require("morgan");
 const mongoose = require("mongoose");
 const cookieParser = require("cookie-parser");
+const cors = require('cors');
 const PORT = 5005;
 
 // const MONGO_URI =
@@ -30,6 +31,13 @@ const app = express();
 
 // MIDDLEWARE
 // Research Team - Set up CORS middleware here:
+
+app.use(
+  cors({
+    origin: ['http://localhost:5173'], // Add the URLs of allowed origins to this array
+  })
+);
+
 // ...
 app.use(express.json());
 app.use(morgan("dev"));
@@ -49,10 +57,10 @@ app.get("/api/users/:id", isAuthenticated, (req, res, next) => {
 })
 
 const studentsRoutes = require("./routes/student.routes");
-app.use("/", studentsRoutes);
+app.use("/api", studentsRoutes);
 
 const cohortsRoutes = require("./routes/cohort.routes");
-app.use("/", cohortsRoutes);
+app.use("/api", cohortsRoutes);
 
 // ROUTES - https://expressjs.com/en/starter/basic-routing.html
 // Devs Team - Start working on the routes here:
