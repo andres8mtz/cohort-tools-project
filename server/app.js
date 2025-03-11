@@ -36,6 +36,9 @@ app.use(express.static("public"));
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
+const authRoutes = require("./routes/auth.routes");
+app.use("/auth", authRoutes);
+
 const studentsRoutes = require("./routes/student.routes");
 app.use("/", studentsRoutes);
 
