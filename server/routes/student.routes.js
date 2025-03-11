@@ -21,12 +21,12 @@ router.post('/students', (req, res, next) => {
     email,
     phone,
     linkedinUrl,
-    // languages: [],
+    languages,
     program,
     background,
     image,
     cohort,
-    // projects: []
+    projects
   } = req.body; 
 
   Student.create({ 
@@ -35,10 +35,12 @@ router.post('/students', (req, res, next) => {
     email,
     phone,
     linkedinUrl,
+    languages,
     program,
     background,
     image,
-    cohort
+    cohort,
+    projects
      })
     .then((response) => res.json(response))
     .catch((err) => {
@@ -48,7 +50,7 @@ router.post('/students', (req, res, next) => {
 });
 
 router.put("/students/:id", (req, res, next)=>{
-    Student.findByIdAndUpdate(req.params.id, req.body).then((updatedStudent) => 
+    Student.findByIdAndUpdate(req.params.id, req.body, {new: true}).then((updatedStudent) => 
         res.json(updatedStudent)).catch((err) => {
       console.log("Error while updating the student", err);
       res.status(500).json({ message: "Error while updating the student" });
